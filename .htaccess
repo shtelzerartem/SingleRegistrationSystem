@@ -1,0 +1,5 @@
+php_value error_reporting 1
+AddDefaultCharset UTF-8
+<filesMatch ".(css|jpg|jpeg|png|gif|js|ico)$">
+Header set Cache-Control "max-age=10, public"
+</filesMatch>
