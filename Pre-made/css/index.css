@@ -1,0 +1,37 @@
+@import url("../fonts/MS/fonts.css");
+
+html{
+    font-family: MCWXX, Arial, Helvetica, sans-serif;
+}
+
+.input-field label {
+ color: #333;
+}
+.input-field .prefix.active {
+ color: #FF5F4C;
+}
+.input-field input[type=text]:focus + label, .input-field input[type=password]:focus + label {
+ color: #FF5F4C;
+}
+.input-field input[type=text].invalid:focus + label, .input-field input[type=password].invalid + label {
+ color: red;
+}
+.input-field input[type=text]:focus, .input-field input[type=password]:focus {
+ border-bottom: 1px solid #FF5F4C;
+ box-shadow: 0 1px 0 0 #FF5F4C;
+}
+.input-field input[type=text].valid, .input-field input[type=password].valid {
+ border-bottom: 1px solid #FF5F4C;
+ box-shadow: 0 1px 0 0 #FF5F4C;
+}
+.input-field input[type=text].invalid {
+ border-bottom: 1px solid red;
+ box-shadow: 0 1px 0 0 red;
+}
+.btn, .btn:hover{
+    background-color: #FF5F4C;
+}
+
+::selection {
+    background: #f8ffa5;
+}
