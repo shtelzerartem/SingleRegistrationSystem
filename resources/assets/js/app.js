@@ -1,10 +1,11 @@
-// require('./bootstrap');
-
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDom from 'react-dom';
+import { Router, browserHistory } from 'react-router';
+import routes from './routes';
 
+require('../sass/app.scss')
 
-// /* Import the Main component */
-import ButtonAppBar from './components/Main';
-
-ReactDOM.render(<ButtonAppBar />, document.querySelector('#app'));
+ReactDom.render(
+  <Router history={browserHistory} routes={routes} />,
+  document.querySelector('#app')
+);
