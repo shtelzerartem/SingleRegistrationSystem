@@ -7,14 +7,12 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import { Subject, School } from '@material-ui/icons/';
 
 import { purple, grey} from '@material-ui/core/colors/';
-import { BrowserRouter as Link} from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
+import image from '../../img/logo.svg';
 
 const styles = {
   root: {
-    flexGrow: 1,
-  },
-  flex: {
     flexGrow: 1,
   },
   menuButton: {
@@ -22,17 +20,19 @@ const styles = {
     marginRight: 20,
   },
   TabHover: {
+    'font-size': 1 + 'rem !important',
     minHeight: 48,
     opacity: 1,
     color: grey[900],
-    "text-transform": "none",
-    transition: "1s",
+    'text-transform': 'none',
+    'text-decoration': 'none !important',
+    transition: '1s',
     '&:hover':{
-      transition: "1s",
+      transition: '1s',
     }
   },
   wrapper: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginLeft: 10,
   }
 };
@@ -54,14 +54,14 @@ function Header(props) {
   return (
     <div className={classes.root} >
     <MuiThemeProvider theme={theme}>
-      <AppBar position="static" color="default" style={{ paddingLeft: 30, paddingRight: 30}}>
+      <AppBar position="static" color="default" style={{ padding: '0 10% 0' }}>
         <Toolbar variant="dense">
-          
-          <Typography variant="title" color="inherit" className={classes.flex}>
-            News
-          </Typography>
-          
-          <Link to={"olympiads"}>
+
+          <Link to="/" style={{ marginRight: 'auto'}}>
+            <img src={image} style={{ height: 1.5 + 'rem' }}/>
+          </Link>
+
+          <Link to="/olympiads">
             <Tab 
               className={classes.TabHover} 
               value="olympiads" 
@@ -71,7 +71,7 @@ function Header(props) {
             />
           </Link>
 
-          <Link to={"results"}>
+          <Link to="/results">
             <Tab 
               className={classes.TabHover} 
               value="results" 
@@ -81,7 +81,7 @@ function Header(props) {
             />
           </Link>
 
-          <Link to={"login"}>
+          <Link to="/login">
             <Tab className={classes.TabHover} value="login" label="Войти" />
           </Link>
 
@@ -96,5 +96,6 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+export default withRouter(Header) && withStyles(styles)(Header);
+
 
