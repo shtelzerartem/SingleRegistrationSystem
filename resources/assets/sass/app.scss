@@ -16,3 +16,13 @@ html, body{
 a{
     text-decoration: none;
 }
+@media (min-width: 600px) {
+    .content_wrapper {
+        padding-left: calc( 24px + 10% );
+        padding-right: calc( 24px + 10% );
+    }
+}
+.content_wrapper{
+    padding-left: calc( 16px + 5% );
+    padding-right: calc( 16px + 5% );
+}

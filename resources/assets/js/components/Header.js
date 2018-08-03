@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Tab, Typography } from '@material-ui/core/';
-
-import SvgIcon from '@material-ui/core/SvgIcon';
-import { Subject, School } from '@material-ui/icons/';
-
-import { purple, grey} from '@material-ui/core/colors/';
 import { withRouter, Link } from 'react-router-dom';
+
+import { withStyles } from '@material-ui/core/styles';
+import { AppBar, Toolbar, Tab } from '@material-ui/core/';
+import { Subject, School } from '@material-ui/icons/';
+import { grey } from '@material-ui/core/colors/';
 
 import image from '../../img/logo.svg';
 
 const styles = {
   root: {
     flexGrow: 1,
+    marginBottom: 2 + 'rem'
   },
   menuButton: {
     marginLeft: -12,
@@ -38,26 +37,16 @@ const styles = {
 };
 
 
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: 'MCWXX',
-  },
-  palette: {
-    primary: purple,
-    secondary: purple,
-  }
-});
 
 
 function Header(props) {
   const { classes } = props;
   return (
     <div className={classes.root} >
-    <MuiThemeProvider theme={theme}>
-      <AppBar position="static" color="default" style={{ padding: '0 10% 0' }}>
+      <AppBar position="static" color="default" className="content_wrapper">
         <Toolbar variant="dense">
 
-          <Link to="/" style={{ marginRight: 'auto'}}>
+          <Link to="/" style={{ marginRight: 'auto' }}>
             <img src={image} style={{ height: 1.5 + 'rem' }}/>
           </Link>
 
@@ -87,7 +76,6 @@ function Header(props) {
 
         </Toolbar>
       </AppBar>
-    </MuiThemeProvider>
     </div>
   );
 }
