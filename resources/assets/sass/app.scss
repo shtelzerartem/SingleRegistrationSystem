@@ -2,6 +2,10 @@
 html, body{
     margin:0;
     padding: 0;
+    height:100%;
+}
+#app {
+    height:inherit;
 }
 // Fonts
 // @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
@@ -21,8 +25,31 @@ a{
         padding-left: calc( 24px + 10% );
         padding-right: calc( 24px + 10% );
     }
+    .content_wrapper_minimalized{
+        padding-left: calc( 24px + 30% );
+        padding-right: calc( 24px + 30% );
+    }
 }
 .content_wrapper{
     padding-left: calc( 16px + 5% );
     padding-right: calc( 16px + 5% );
+}
+.content_wrapper_minimalized{
+    padding-left: calc( 16px + 15% );
+    padding-right: calc( 16px + 15% );
+}
+
+::selection {
+    background: #f8ffa5;
+}
+html {
+    width: unset;
+}
+.centered_block {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }

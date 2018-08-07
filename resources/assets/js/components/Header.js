@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Tab } from '@material-ui/core/';
-import { Subject, School } from '@material-ui/icons/';
+import { Subject, School, Person } from '@material-ui/icons/';
 import { grey } from '@material-ui/core/colors/';
 
 import image from '../../img/logo.svg';
@@ -41,9 +41,13 @@ const styles = {
 
 function Header(props) {
   const { classes } = props;
+  let style_type = "content_wrapper";
+  if (props.minimalized){
+    style_type = "content_wrapper_minimalized"; 
+  }
   return (
     <div className={classes.root} >
-      <AppBar position="static" color="default" className="content_wrapper">
+      <AppBar position="static" color="default" className={ style_type }>
         <Toolbar variant="dense">
 
           <Link to="/" style={{ marginRight: 'auto' }}>
@@ -70,10 +74,15 @@ function Header(props) {
             />
           </Link>
 
-          <Link to="/login">
-            <Tab className={classes.TabHover} value="login" label="Войти" />
+          <Link to="/signin">
+            <Tab 
+              className={classes.TabHover} 
+              value="login" 
+              classes={{ wrapper: classes.wrapper }} 
+              icon={<Person />} 
+              label="Войти" 
+            />
           </Link>
-
         </Toolbar>
       </AppBar>
     </div>
