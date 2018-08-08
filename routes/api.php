@@ -12,11 +12,15 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('signup', 'RegisterController@register');
-Route::post('signin', 'LoginController@login');
+Route::post('signup', 'Auth/RegisterController@register');
+
+Route::post('login_existance', 'ExistanceController@login_existance');
+Route::post('email_existance', 'ExistanceController@email_existance');
+
+Route::post('signin', 'LozginController@login');
 Route::post('recover', 'RecoverController@recover');
 
-Route::group(['middleware' => ['jwt.auth']], function() {
+Route::group(['middleware' => ['web']], function() {
     Route::get('logout', 'LogoutController@logout');
     
     Route::get('test', function(){

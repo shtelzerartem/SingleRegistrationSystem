@@ -14,4 +14,7 @@
         <div id="app"></div>
         <script src="{{ asset('js/app.js')}}" ></script>
     </body>
+        <script type="text/javascript">
+            window.token = '{{ csrf_token() }}';
+        </script>
 </html>

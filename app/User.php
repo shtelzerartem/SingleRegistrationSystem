@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use Notifiable;
 
@@ -16,21 +15,15 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'login', 'email', 'password',
     ];
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
     /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
+     * The attributes that should be hidden for arrays.
      *
-     * @return array
+     * @var array
      */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 }
