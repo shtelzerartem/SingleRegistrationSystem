@@ -52,10 +52,12 @@ class RegisterBlock extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            login: {value: '', error: false } ,
-            email: {value: '', error: false } ,
-            password: {value: '', error: false } ,
-            password_repeat: {value: '', error: false }, 
+            login: '',
+            login_error: false,
+            email: '',
+            email_error: false,
+            password: {value: ''} ,
+            password_repeat: {value: ''}, 
         }
     }
 
@@ -68,13 +70,14 @@ class RegisterBlock extends React.Component {
         const {name, value} = e.target;
         let error = false;
         this.setState({
-            [name]: {value: value, error: error},
+            [name]: value,
         });
+
         axios.post(`api/${ name }_existance`, {value})
         .then(response => {
             error = !response.data[0];
             this.setState({
-                [name]: {error: error},
+                [name + "_error"]: error,
             });
         }).catch(err => {console.log(err);});
     };
@@ -95,10 +98,10 @@ class RegisterBlock extends React.Component {
                             Регистрация
                         </Typography>
 
-                        <FormControl className={classes.textField} error={ this.state.login.error } aria-describedby="login-error-text" fullWidth required>
+                        <FormControl className={classes.textField} error={ this.state.login_error } aria-describedby="login-error-text" fullWidth required>
                             <InputLabel htmlFor="login-error">Логин</InputLabel>
-                            <Input id="login-error" value={this.state.login.value} name="login" type="text" maxLength="64" onChange={this.handleChange.bind(this)} />
-                            { this.state.login.error ? <FormHelperText id="login-error-text">Такой логин уже существует</FormHelperText> : null }
+                            <Input id="login-error" value={this.state.login} name="login" type="text" maxLength="64" onChange={this.handleChange.bind(this)} />
+                            { this.state.login_error ? <FormHelperText id="login-error-text">Такой логин уже существует</FormHelperText> : null }
                         </FormControl>
     
                             {/* <TextField
@@ -113,11 +116,11 @@ class RegisterBlock extends React.Component {
                                 margin="normal"
                                 fullWidth
                             /><br /> */}
-                            
+
                         <FormControl className={classes.textField} aria-describedby="email-error-text" fullWidth required>
                             <InputLabel htmlFor="email-error">Email</InputLabel>
-                            <Input id="email-error" type="email" name="email" value={this.state.email.value} onChange={this.handleChange.bind(this)} />
-                            { this.state.email.error ? <FormHelperText id="email-error-text">Такой email уже зарегистрирован</FormHelperText> : null }
+                            <Input id="email-error" type="email" name="email" value={this.state.email} onChange={this.handleChange.bind(this)} />
+                            { this.state.email_error ? <FormHelperText id="email-error-text">Такой email уже зарегистрирован</FormHelperText> : null }
                         </FormControl>
 {/*                             
                             <TextField
