@@ -11,7 +11,7 @@ const styles = {
         display: 'flex',
         flexWrap: 'wrap',
         minWidth: 400,
-        maxWidth: 700,
+        maxWidth: 430,
     },
     card: {
         minWidth: 275,
@@ -56,8 +56,9 @@ class RegisterBlock extends React.Component {
             login_error: false,
             email: '',
             email_error: false,
-            password: {value: ''} ,
-            password_repeat: {value: ''}, 
+            password: '',
+            password_error: false,
+            password_repeat: '', 
         }
     }
 
@@ -70,23 +71,45 @@ class RegisterBlock extends React.Component {
         const {name, value} = e.target;
         let error = false;
         this.setState({
-            [name]: value,
+            [name]: value.replace(/[^a-z0-9 ]/i, ''),
         });
-
-        axios.post(`api/${ name }_existance`, {value})
-        .then(response => {
-            error = !response.data[0];
-            this.setState({
-                [name + "_error"]: error,
-            });
-        }).catch(err => {console.log(err);});
+        if (value.replace(/[^a-z0-9 ]/i, '') == value && value != ''){
+            axios.post(`api/${ name }_existance`, {value})
+            .then(response => {
+                error = !response.data[0];
+                this.setState({
+                    [name + "_error"]: error,
+                });
+            }).catch(err => {console.log(err);});
+        }
     };
-    
+
+    handleChangePassword(e) {
+        const {name, value} = e.target;
+        let error = false;
+        this.setState({
+            [name]: value.replace(/[^a-z0-9 ]/i, ''),
+        },
+        () => {
+            if (value.replace(/[^a-z0-9 ]/i, '') == value && value != '' && name == 'password_repeat' && this.state.password != value){
+                this.setState({
+                    [name + "_error"]: true,
+                });
+            }
+            else if (this.state.password == value){
+                this.setState({
+                    [name + "_error"]: false,
+                });
+            }
+        }
+        );
+    };
+
     render() {
         const { classes } = this.props;
         return (
             
-            <div >
+            <div>
                 <Link to="/" style={{ display: 'block' }}>
                     <img src={image} style={{ height: 3 + 'rem', margin: '-3rem auto 3rem auto', display: 'block' }}/>
                 </Link>
@@ -100,64 +123,27 @@ class RegisterBlock extends React.Component {
 
                         <FormControl className={classes.textField} error={ this.state.login_error } aria-describedby="login-error-text" fullWidth required>
                             <InputLabel htmlFor="login-error">Логин</InputLabel>
-                            <Input id="login-error" value={this.state.login} name="login" type="text" maxLength="64" onChange={this.handleChange.bind(this)} />
+                            <Input id="login-error" value={this.state.login} name="login" type="text" maxLength="64" autoComplete="current-login" type="text" maxLength="64" onChange={this.handleChange.bind(this)} />
                             { this.state.login_error ? <FormHelperText id="login-error-text">Такой логин уже существует</FormHelperText> : null }
                         </FormControl>
-    
-                            {/* <TextField
-                                id="login-input"
-                                label="Логин"
-                                className={classes.textField}
-                                value={login}
-                                onChange={UpdateLogin}
-                                type="text"
-                                maxLength="64"
-                                autoComplete="current-login"
-                                margin="normal"
-                                fullWidth
-                            /><br /> */}
 
-                        <FormControl className={classes.textField} aria-describedby="email-error-text" fullWidth required>
+                        <FormControl className={classes.textField} error={ this.state.email_error } aria-describedby="email-error-text" fullWidth required>
                             <InputLabel htmlFor="email-error">Email</InputLabel>
-                            <Input id="email-error" type="email" name="email" value={this.state.email} onChange={this.handleChange.bind(this)} />
+                            <Input id="email-error" type="email" name="email" maxLength="64" autoComplete="current-email" value={this.state.email} onChange={this.handleChange.bind(this)} />
                             { this.state.email_error ? <FormHelperText id="email-error-text">Такой email уже зарегистрирован</FormHelperText> : null }
                         </FormControl>
-{/*                             
-                            <TextField
-                                id="email-input"
-                                label="Email"
-                                className={classes.textField}
-                                // value={email}
-                                maxLength="64"
-                                type="email"
-                                autoComplete="current-email"
-                                margin="normal"
-                                fullWidth
-                            /><br /> */}
-    
-                            <TextField
-                                id="password-input"
-                                label="Пароль"
-                                className={classes.textField}
-                                // value={password}
-                                maxLength="64"
-                                type="password"
-                                autoComplete="current-password"
-                                margin="normal"
-                                fullWidth
-                            /><br />
-                            <TextField
-                                id="password-repeat-input"
-                                label="Повторите пароль"
-                                className={classes.textField}
-                                // value={password_repeat}s
-                                maxLength="64"
-                                type="password"
-                                autoComplete="current-repeat-password"
-                                margin="normal"
-                                
-                                fullWidth
-                            />
+
+                        <FormControl className={classes.textField} error={ this.state.password_error || this.state.password_repeat_error} aria-describedby="password-error-text" fullWidth required>
+                            <InputLabel htmlFor="password-error">Пароль</InputLabel>
+                            <Input id="password-error" type="password" name="password" maxLength="64" autoComplete="current-password" value={this.state.password} onChange={this.handleChangePassword.bind(this)} />
+                            { this.state.password_error ? <FormHelperText id="email-error-text">Пароль должен состоять минимум из 6 латинских символов и цифр</FormHelperText> : null }
+                        </FormControl>
+
+                        <FormControl className={classes.textField} error={ this.state.password_repeat_error } aria-describedby="password-repeat-error-text" fullWidth required>
+                            <InputLabel htmlFor="password-error">Повторите пароль</InputLabel>
+                            <Input id="password-repeat-error" type="password" name="password_repeat" maxLength="64" autoComplete="current-password-repeat" value={this.state.password_repeat} onChange={this.handleChangePassword.bind(this)} />
+                            { this.state.password_repeat_error ? <FormHelperText id="email-error-text">Пароли не совпадают</FormHelperText> : null }
+                        </FormControl>
     
                     </CardContent>
                     <CardContent>
